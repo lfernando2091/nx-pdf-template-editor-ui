@@ -27,6 +27,7 @@
       "header": {
         "content": [
           {
+            "id": "f41ff940-b574-4ae8-9a97-9f9eb4a5c70c",
             "@type": "P",
             "value": "Hola mundo ${json(hello)}",
             "alignment": "ALIGN_RIGHT"
@@ -38,6 +39,7 @@
           {
             "content": [
               {
+                "id": "d4c0d661-5481-4cff-893f-db14459cd2b5",
                 "@type": "P",
                 "value": "Hola mundo ${var2} ${json(config.val1)}",
                 "size": {
@@ -54,7 +56,7 @@
           {
             "content": [
               {
-                "id": "abcd_123",
+                "id": "9ba746b4-3d78-45fe-8fda-ba546027e579",
                 "@type": "P",
                 "value": "Hola mundo ${json(config.val1)}",
                 "alignment": "ALIGN_RIGHT",

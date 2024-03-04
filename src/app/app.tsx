@@ -48,6 +48,7 @@ const Panel = styled('div')`
 export function App() {
   const [currentTool, setCurrentTool] = useState<ToolType>(ToolType.Cursor)
   const [currentTemplate, setCurrentTemplate] = useState<PdfJsonSchema>((data as unknown) as PdfJsonSchema)
+  const [componentId, setCurrentComponentId] = useState<string | null>(null)
 
   const onChangeTool = (select: ToolType) => {
     setCurrentTool(select)
@@ -57,10 +58,16 @@ export function App() {
     setCurrentTemplate(template)
   }
 
+  const onChangeComponent = (id: string | null) => {
+    setCurrentComponentId(id)
+  }
+
   const state: AppState = {
     tool: currentTool,
     template: currentTemplate,
-    setTemplate: onChangeTemplate
+    setTemplate: onChangeTemplate,
+    componentId,
+    setComponentId: onChangeComponent
   }
 
   return (

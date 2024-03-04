@@ -11,12 +11,11 @@ import { ComponentSchema, DEFAULT_DOCUMENT,
     MarginSchema,
     ParagraphSchema
 } from '../models/pdf-jsonschema';
-import { MouseEvent } from 'react';
 import { Circle, Layer, Rect, Stage } from 'react-konva';
 import styled from '@emotion/styled';
 import { ToolType } from '../section/ToolsPanel';
-import { DEFAULT_SIZING } from '../utils/constants';
 import { NxText } from '../components/Text';
+import { useEffect } from 'react';
 
 export type DocumentPanelProps = {
 
@@ -62,13 +61,12 @@ const MarginsRegion = ({
 
 type ComponentHandleProps = {
     data: ComponentSchema
-    tool: ToolType
 }
 
 const ComponentHandle = ({ 
-    data,
-    tool
+    data
 }: ComponentHandleProps) => {
+    const { componentId, tool } = useAppContext()
     const size = getOrDefault(DEFAULT_SIZE, data.size)
     const position = getOrDefault(DEFAULT_POSITION, data.position)
     switch(data['@type']) {
@@ -76,12 +74,14 @@ const ComponentHandle = ({
             const comp = data as ParagraphSchema
             return  (<>
                 <NxText 
+                    id={comp.id}
                     draggable={tool ===  ToolType.MoveCursor}
                     w={size.width}
                     h={size.height}
                     x={position.x}
                     y={position.y}
                     align="center"
+                    select={componentId === comp.id && tool ===  ToolType.MoveCursor}
                     text={comp.value}/>
                 </>)
         default:
@@ -91,20 +91,22 @@ const ComponentHandle = ({
 
 export const DocumentPanel = ({
 }: DocumentPanelProps) => {
-    const { template, tool } = useAppContext()
+    const { template, tool, setComponentId } = useAppContext()
     const document = getOrDefault(DEFAULT_DOCUMENT, template.document);
     const content = template.content;
     const pageSize = getSize(getOrDefault(DEFAULT_PAGE_SIZE, document.page_size))
     const margins = getOrDefault(DEFAULT_MARGINS, document.margins);
 
-    const onAddNewComponent = (event: MouseEvent<HTMLDivElement>) => {
-        event.stopPropagation()
-        // const elementRect = event.target.getBoundingClientRect();
-        const x = event.pageX
-        const y = event.pageY
-        console.log(`onAddNewComponent x: ${x} y: ${y}`)
-        console.log(event)
-    }
+    useEffect(() => {
+        setComponentId(null)
+    }, [])
+
+    useEffect(() => {
+        if (tool !== ToolType.MoveCursor) {
+            setComponentId(null)
+        }
+    }, [tool])
+
     return (
         <>
             <div style={{ marginBottom: "5rem", marginTop: "3rem" }}>
@@ -115,13 +117,13 @@ export const DocumentPanel = ({
                     <Layer>
                         <MarginsRegion size={pageSize} margins={margins}/>
                         {content.header.content.map((e, i) => (
-                            <ComponentHandle key={i} data={e} tool={tool}/>
+                            <ComponentHandle key={i} data={e}/>
                         ))}
                         {content.body.pages[0].content.map((e, i) => (
-                            <ComponentHandle key={i} data={e} tool={tool}/>
+                            <ComponentHandle key={i} data={e}/>
                         ))}
                         {content.footer.content.map((e, i) => (
-                            <ComponentHandle key={i} data={e} tool={tool}/>
+                            <ComponentHandle key={i} data={e}/>
                         ))}
                         {/* <Circle 
                             draggable={tool ===  ToolType.MoveCursor}
