@@ -1,4 +1,5 @@
 import { PageType } from "../components/BasePage"
+import { DEFAULT_SIZING } from "../utils/constants";
 
 export const DEFAULT_PAGE_SIZE = PageType.A4;
 export const DEFAULT_MARGIN = 36;
@@ -40,18 +41,37 @@ export const DEFAULT_DOCUMENT: DocumentSchema = {
 export type ComponentBase = {
     id: string
     "@type": string
+    size?: SizeSchema
+    position?: PositionSchema
+}
+
+export type SizeSchema = {
+    width: number
+    height: number
+}
+
+export const DEFAULT_SIZE: SizeSchema = {
+    width: DEFAULT_SIZING,
+    height: DEFAULT_SIZING
+}
+
+export type PositionSchema = {
+    x: number
+    y: number
+}
+
+export const DEFAULT_POSITION: PositionSchema = {
+    x: 0,
+    y: 0
 }
 
 export type ParagraphSchema = {
     value: string
     alignment: string
-    size: any
-    position: any
 } & ComponentBase
 
 export type RectangleSchema = {
-    size: any
-    position: any
+    color: string
 }  & ComponentBase
 
 export type ComponentSchema = ParagraphSchema | RectangleSchema
