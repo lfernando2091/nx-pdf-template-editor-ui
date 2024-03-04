@@ -1,8 +1,11 @@
+import * as data from '../assets/example.json';
 import styled from '@emotion/styled'
 import { ToolType, ToolsPanel } from './section/ToolsPanel';
 import { EditorContent } from './section/EditorContent';
 import { DrawerContent } from './section/DrawerContent';
 import { useState } from 'react';
+import { AppContext, AppState } from './states/AppContext';
+import { PdfJsonSchema } from './models/pdf-jsonschema';
 
 const Layout = styled('div')`
   display: flex;
@@ -44,28 +47,41 @@ const Panel = styled('div')`
 
 export function App() {
   const [currentTool, setCurrentTool] = useState<ToolType>(ToolType.Cursor)
+  const [currentTemplate, setCurrentTemplate] = useState<PdfJsonSchema>((data as unknown) as PdfJsonSchema)
 
   const onChangeTool = (select: ToolType) => {
     setCurrentTool(select)
   }
 
+  const onChangeTemplate = (template: PdfJsonSchema) => {
+    setCurrentTemplate(template)
+  }
+
+  const state: AppState = {
+    tool: currentTool,
+    template: currentTemplate,
+    setTemplate: onChangeTemplate
+  }
+
   return (
     <>
-      <Layout>
-        <LeftNavbar>
-          <ToolsPanel 
-            onChangeTool={onChangeTool}
-            current={currentTool}/>
-        </LeftNavbar>
-        <Panel>
-          <RightNavbar>
-            <DrawerContent/>
-          </RightNavbar>
-          <Content>
-            <EditorContent/>
-          </Content>
-        </Panel>
-      </Layout>
+      <AppContext.Provider value={state}>
+        <Layout>
+          <LeftNavbar>
+            <ToolsPanel 
+              onChangeTool={onChangeTool}
+              current={currentTool}/>
+          </LeftNavbar>
+          <Panel>
+            <RightNavbar>
+              <DrawerContent/>
+            </RightNavbar>
+            <Content>
+              <EditorContent/>
+            </Content>
+          </Panel>
+        </Layout>
+      </AppContext.Provider>
     </>
   );
 }
