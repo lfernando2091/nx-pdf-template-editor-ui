@@ -1,8 +1,17 @@
 import styled from '@emotion/styled'
 
-export const FillContent = styled('div')`
+type FillContentProps = {
+  h?: number
+  w?: number
+  borderBottom?: boolean
+  borderRight?: boolean
+}
+
+export const FillContent = styled('div')<FillContentProps>`
   background-color: var(--gray-a3);
-  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.2' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
-  height: 100%;
+  height: ${props => props.h ? `${props.h}px`: "100%" };
+  width: ${props => props.w ? `${props.w}px`: "100%" };
   background-clip: padding-box;
+  border-bottom: ${props => props.borderBottom ? "0.5px dashed var(--accent-a11)": "" };
+  border-right: ${props => props.borderRight ? "0.5px dashed var(--accent-a11)": "" };
 `
