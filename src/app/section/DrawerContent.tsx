@@ -1,9 +1,9 @@
 import { 
-    Text, 
     Box, 
     Tabs, 
 } from '@radix-ui/themes';
 import { PropertiesPanel } from '../panel/PropertiesPanel';
+import { LayersPanel } from '../panel/LayersPanel';
 
 export const DrawerContent = () => {
     return (
@@ -19,7 +19,7 @@ export const DrawerContent = () => {
               <PropertiesPanel/>
             </Tabs.Content>
             <Tabs.Content value="layers">
-              <Text size="2">Layers.</Text>
+              <LayersPanel/>
             </Tabs.Content>
           </Box>
         </Tabs.Root>

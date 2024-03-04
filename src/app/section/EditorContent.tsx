@@ -3,6 +3,8 @@ import {
     Box, 
     Tabs, 
   } from '@radix-ui/themes';
+import { DocumentPanel } from '../panel/DocumentPanel';
+import { SourcePanel } from '../panel/SourcePanel';
 
 export const EditorContent = () => {
     return (
@@ -14,10 +16,10 @@ export const EditorContent = () => {
               </Tabs.List>
               <Box px="4" pt="3" pb="2">
                   <Tabs.Content value="preview">
-                    <Text size="2">Preview.</Text>
+                    <DocumentPanel/>
                   </Tabs.Content>
                   <Tabs.Content value="source">
-                    <Text size="2">Source.</Text>
+                    <SourcePanel/>
                   </Tabs.Content>
               </Box>
             </Tabs.Root>
