@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
-import { ToolsPanel } from './section/ToolsPanel';
+import { ToolType, ToolsPanel } from './section/ToolsPanel';
 import { EditorContent } from './section/EditorContent';
 import { DrawerContent } from './section/DrawerContent';
+import { useState } from 'react';
 
 const Layout = styled('div')`
   display: flex;
@@ -42,11 +43,19 @@ const Panel = styled('div')`
 `
 
 export function App() {
+  const [currentTool, setCurrentTool] = useState<ToolType>(ToolType.Cursor)
+
+  const onChangeTool = (select: ToolType) => {
+    setCurrentTool(select)
+  }
+
   return (
     <>
       <Layout>
         <LeftNavbar>
-          <ToolsPanel/>
+          <ToolsPanel 
+            onChangeTool={onChangeTool}
+            current={currentTool}/>
         </LeftNavbar>
         <Panel>
           <RightNavbar>
