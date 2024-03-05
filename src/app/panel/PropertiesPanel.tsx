@@ -8,6 +8,7 @@ import {
 import { useAppContext } from '../states/AppContext';
 import { ParagraphSchema } from '../models/pdf-jsonschema';
 import { DotsHorizontalIcon, InfoCircledIcon } from '@radix-ui/react-icons';
+import { DialogHelper } from '../components/DialogHelper';
 
 export const PropertiesPanel = () => {
     const { component } = useAppContext()
@@ -42,9 +43,12 @@ export const PropertiesPanel = () => {
                         <TextField.Root mb="1" size="1">
                             <TextField.Input readOnly value={(component as ParagraphSchema).value} />
                             <TextField.Slot>
-                                <IconButton size="1" variant="ghost">
-                                    <DotsHorizontalIcon />
-                                </IconButton>
+                                <DialogHelper
+                                title='Hola'>
+                                    <IconButton size="1" variant="ghost">
+                                        <DotsHorizontalIcon />
+                                    </IconButton>
+                                </DialogHelper>
                             </TextField.Slot>
                         </TextField.Root>
                     </>
