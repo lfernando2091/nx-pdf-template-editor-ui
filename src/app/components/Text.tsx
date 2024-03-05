@@ -10,14 +10,14 @@ type NxTextProps = {
     data: ParagraphSchema
     draggable: boolean
     select?: boolean
-    location: ComponentLocation
+    onUpdate: (update: ComponentSchema) => void
 }
 // crypto.randomUUID()
 export const NxText = ({
     data,
     draggable,
     select,
-    location
+    onUpdate
 }: NxTextProps) => {
     const shapeRef = useRef<Konva.Group>(null)
     const transformRef = useRef<Konva.Transformer>(null)
@@ -43,39 +43,8 @@ export const NxText = ({
 
     const onDoubleClickEvent = (_ev: Konva.KonvaEventObject<MouseEvent | Event>) => {
         if (tool === ToolType.MoveCursor) {
-            setTransform(true)
+            setTransform(!transform)
         }
-    }
-
-    const onUpdate = (update: ComponentSchema) => {
-        if (location === ComponentLocation.HEADER) {
-            template.content.header.content = template.content.header.content.map((e) => {
-                if(e.id === update.id) {
-                    return update
-                }
-                return e
-            })
-        }
-        if (location === ComponentLocation.BODY) {
-            template.content.body.pages = template.content.body.pages.map((e) => {
-                e.content = e.content.map((el) => {
-                    if (el.id === update.id) {
-                        return update
-                    }
-                    return el
-                })
-                return e
-            })
-        }
-        if (location === ComponentLocation.FOOTER) {
-            template.content.footer.content = template.content.footer.content.map((e) => {
-                if(e.id === update.id) {
-                    return update
-                }
-                return e
-            })
-        }
-        setTemplate(template)
     }
 
     useEffect(() => {
