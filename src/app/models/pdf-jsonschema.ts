@@ -109,4 +109,10 @@ export const DEFAULT_PDF_SCHEMA: PdfJsonSchema = {
     }
 }
 
+export enum ComponentLocation {
+    HEADER,
+    BODY,
+    FOOTER
+}
+
 export const getOrDefault = <T>(option: T, target?: T): T => target ?? option

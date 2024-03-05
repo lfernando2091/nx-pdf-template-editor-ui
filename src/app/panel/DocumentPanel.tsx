@@ -1,21 +1,17 @@
 import { CenterContent } from '../components/Center';
-import { getSize, Size } from '../components/BasePage';
+import { getSize } from '../components/BasePage';
 import { useAppContext } from '../states/AppContext';
-import { ComponentSchema, DEFAULT_DOCUMENT, 
-    DEFAULT_MARGIN, 
+import { ComponentLocation, DEFAULT_DOCUMENT, 
     DEFAULT_MARGINS, 
     DEFAULT_PAGE_SIZE, 
-    DEFAULT_POSITION, 
-    DEFAULT_SIZE, 
-    getOrDefault,
-    MarginSchema,
-    ParagraphSchema
+    getOrDefault
 } from '../models/pdf-jsonschema';
-import { Circle, Layer, Rect, Stage } from 'react-konva';
+import { Circle, Layer, Stage } from 'react-konva';
 import styled from '@emotion/styled';
 import { ToolType } from '../section/ToolsPanel';
-import { NxText } from '../components/Text';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { ComponentHandle } from '../components/ComponentHandle';
+import { MarginsRegion } from '../components/MarginsRegion';
 
 export type DocumentPanelProps = {
 
@@ -26,86 +22,27 @@ const StageWithTheme = styled(Stage)`
     // background-color: var(--accent-a3);
 `
 
-type MarginsRegionProps = {
-    size: Size
-    margins: MarginSchema
-}
-
-const MarginsRegion = ({
-    size,
-    margins
-}: MarginsRegionProps) => {
-    const marginSize = 1
-    const marginColor = "green"
-    return (
-        <>
-        <Rect width={size.w} 
-            height={marginSize} 
-            y={margins.top}
-            fill={marginColor}/>
-        <Rect width={marginSize} 
-            height={size.h} 
-            x={margins.left}
-            fill={marginColor}/>
-        <Rect width={size.w} 
-            height={marginSize} 
-            y={size.h - (margins.bottom ?? DEFAULT_MARGIN)}
-            fill={marginColor}/>
-        <Rect width={marginSize} 
-            height={size.h} 
-            x={size.w - (margins.right ?? DEFAULT_MARGIN)}
-            fill={marginColor}/>
-        </>
-    )
-}
-
-type ComponentHandleProps = {
-    data: ComponentSchema
-}
-
-const ComponentHandle = ({ 
-    data
-}: ComponentHandleProps) => {
-    const { componentId, tool } = useAppContext()
-    const size = getOrDefault(DEFAULT_SIZE, data.size)
-    const position = getOrDefault(DEFAULT_POSITION, data.position)
-    switch(data['@type']) {
-        case "P":
-            const comp = data as ParagraphSchema
-            return  (<>
-                <NxText 
-                    id={comp.id}
-                    draggable={tool ===  ToolType.MoveCursor}
-                    w={size.width}
-                    h={size.height}
-                    x={position.x}
-                    y={position.y}
-                    align="center"
-                    select={componentId === comp.id && tool ===  ToolType.MoveCursor}
-                    text={comp.value}/>
-                </>)
-        default:
-            return  (<></>)
-    }
-}
-
 export const DocumentPanel = ({
 }: DocumentPanelProps) => {
-    const { template, tool, setComponentId } = useAppContext()
+    const { template, tool, setComponent } = useAppContext()
     const document = getOrDefault(DEFAULT_DOCUMENT, template.document);
-    const content = template.content;
+    const [content, setContent] = useState(template.content)
     const pageSize = getSize(getOrDefault(DEFAULT_PAGE_SIZE, document.page_size))
     const margins = getOrDefault(DEFAULT_MARGINS, document.margins);
 
     useEffect(() => {
-        setComponentId(null)
+        setComponent(null)
     }, [])
 
     useEffect(() => {
         if (tool !== ToolType.MoveCursor) {
-            setComponentId(null)
+            setComponent(null)
         }
     }, [tool])
+
+    useEffect(() => {
+        setContent(template.content)
+    }, [template])
 
     return (
         <>
@@ -117,13 +54,13 @@ export const DocumentPanel = ({
                     <Layer>
                         <MarginsRegion size={pageSize} margins={margins}/>
                         {content.header.content.map((e, i) => (
-                            <ComponentHandle key={i} data={e}/>
+                            <ComponentHandle key={i} data={e} location={ComponentLocation.HEADER}/>
                         ))}
                         {content.body.pages[0].content.map((e, i) => (
-                            <ComponentHandle key={i} data={e}/>
+                            <ComponentHandle key={i} data={e} location={ComponentLocation.BODY}/>
                         ))}
                         {content.footer.content.map((e, i) => (
-                            <ComponentHandle key={i} data={e}/>
+                            <ComponentHandle key={i} data={e} location={ComponentLocation.FOOTER}/>
                         ))}
                         {/* <Circle 
                             draggable={tool ===  ToolType.MoveCursor}

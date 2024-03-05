@@ -5,7 +5,7 @@ import { EditorContent } from './section/EditorContent';
 import { DrawerContent } from './section/DrawerContent';
 import { useState } from 'react';
 import { AppContext, AppState } from './states/AppContext';
-import { PdfJsonSchema } from './models/pdf-jsonschema';
+import { ComponentSchema, PdfJsonSchema } from './models/pdf-jsonschema';
 
 const Layout = styled('div')`
   display: flex;
@@ -48,7 +48,7 @@ const Panel = styled('div')`
 export function App() {
   const [currentTool, setCurrentTool] = useState<ToolType>(ToolType.Cursor)
   const [currentTemplate, setCurrentTemplate] = useState<PdfJsonSchema>((data as unknown) as PdfJsonSchema)
-  const [componentId, setCurrentComponentId] = useState<string | null>(null)
+  const [component, setCurrentComponent] = useState<ComponentSchema | null>(null)
 
   const onChangeTool = (select: ToolType) => {
     setCurrentTool(select)
@@ -58,16 +58,16 @@ export function App() {
     setCurrentTemplate(template)
   }
 
-  const onChangeComponent = (id: string | null) => {
-    setCurrentComponentId(id)
+  const onChangeComponent = (id: ComponentSchema | null) => {
+    setCurrentComponent(id)
   }
 
   const state: AppState = {
     tool: currentTool,
     template: currentTemplate,
     setTemplate: onChangeTemplate,
-    componentId,
-    setComponentId: onChangeComponent
+    component,
+    setComponent: onChangeComponent
   }
 
   return (
