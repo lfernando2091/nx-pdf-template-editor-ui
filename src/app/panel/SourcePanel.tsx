@@ -1,4 +1,4 @@
-import Editor, { DiffEditor, useMonaco, loader } from '@monaco-editor/react';
+import Editor from '@monaco-editor/react';
 import { useAppContext } from '../states/AppContext';
 export const SourcePanel = () => {
     const { template, setTemplate } = useAppContext()

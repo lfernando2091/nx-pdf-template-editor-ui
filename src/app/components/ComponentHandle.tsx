@@ -1,6 +1,7 @@
 import { ComponentLocation, ComponentSchema, ParagraphSchema } from "../models/pdf-jsonschema"
 import { ToolType } from "../section/ToolsPanel"
 import { useAppContext } from "../states/AppContext"
+import { COLOR_2, COLOR_3, COLOR_4 } from "../utils/constants"
 import { NxText } from "./Text"
 
 type ComponentHandleProps = {
@@ -52,7 +53,10 @@ export const ComponentHandle = ({
                     data={comp}
                     draggable={tool ===  ToolType.MoveCursor}
                     select={component?.id === comp.id && tool ===  ToolType.MoveCursor}
-                    onUpdate={onUpdate}/>
+                    onUpdate={onUpdate}
+                    color={location === ComponentLocation.HEADER ? COLOR_3 : 
+                        location === ComponentLocation.BODY ? COLOR_2: 
+                        location === ComponentLocation.FOOTER ? COLOR_4: ""}/>
                 </>)
         default:
             return  (<></>)

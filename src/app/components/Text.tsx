@@ -1,5 +1,5 @@
 import { Group, Rect, Text as KonvaText, Transformer } from "react-konva"
-import { COLOR_1, COLOR_2 } from "../utils/constants"
+import { COLOR_1 } from "../utils/constants"
 import { useAppContext } from "../states/AppContext"
 import Konva from "konva"
 import { useEffect, useRef, useState } from "react"
@@ -11,18 +11,20 @@ type NxTextProps = {
     draggable: boolean
     select?: boolean
     onUpdate: (update: ComponentSchema) => void
+    color: string
 }
 // crypto.randomUUID()
 export const NxText = ({
     data,
     draggable,
     select,
-    onUpdate
+    onUpdate,
+    color
 }: NxTextProps) => {
     const shapeRef = useRef<Konva.Group>(null)
     const transformRef = useRef<Konva.Transformer>(null)
     const [transform, setTransform] = useState(false)
-    const { setComponent, template, setTemplate, tool } = useAppContext()
+    const { setComponent, tool } = useAppContext()
     const [size, setSize] = useState(getOrDefault(DEFAULT_SIZE, data.size))
     const [position, setPosition] = useState(getOrDefault(DEFAULT_POSITION, data.position))
 
@@ -114,7 +116,7 @@ export const NxText = ({
             }}>
             <Rect
                 stroke={COLOR_1}
-                fill={COLOR_2}
+                fill={color}
                 strokeWidth={select ? 1: 0}
                 width={size.width}
                 height={size.height}/>
