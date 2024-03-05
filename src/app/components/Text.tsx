@@ -3,7 +3,7 @@ import { COLOR_1, COLOR_2 } from "../utils/constants"
 import { useAppContext } from "../states/AppContext"
 import Konva from "konva"
 import { useEffect, useRef, useState } from "react"
-import { ComponentLocation, ComponentSchema, DEFAULT_POSITION, DEFAULT_SIZE, ParagraphSchema, getOrDefault } from "../models/pdf-jsonschema"
+import { ComponentSchema, DEFAULT_POSITION, DEFAULT_SIZE, ParagraphSchema, getOrDefault } from "../models/pdf-jsonschema"
 import { ToolType } from "../section/ToolsPanel"
 
 type NxTextProps = {

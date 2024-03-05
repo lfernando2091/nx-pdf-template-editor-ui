@@ -4,6 +4,7 @@ import { useAppContext } from '../states/AppContext';
 import { ComponentLocation, DEFAULT_DOCUMENT, 
     DEFAULT_MARGINS, 
     DEFAULT_PAGE_SIZE, 
+    ParagraphSchema, 
     getOrDefault
 } from '../models/pdf-jsonschema';
 import { Circle, Layer, Stage } from 'react-konva';
@@ -12,6 +13,8 @@ import { ToolType } from '../section/ToolsPanel';
 import { useEffect, useState } from 'react';
 import { ComponentHandle } from '../components/ComponentHandle';
 import { MarginsRegion } from '../components/MarginsRegion';
+import Konva from 'konva';
+import { DEFAULT_SIZING } from '../utils/constants';
 
 export type DocumentPanelProps = {
 
@@ -24,11 +27,36 @@ const StageWithTheme = styled(Stage)`
 
 export const DocumentPanel = ({
 }: DocumentPanelProps) => {
-    const { template, tool, setComponent } = useAppContext()
+    const { template, tool, setComponent, setTemplate } = useAppContext()
     const document = getOrDefault(DEFAULT_DOCUMENT, template.document);
     const [content, setContent] = useState(template.content)
     const pageSize = getSize(getOrDefault(DEFAULT_PAGE_SIZE, document.page_size))
     const margins = getOrDefault(DEFAULT_MARGINS, document.margins);
+
+    const onClick = (ev: Konva.KonvaEventObject<MouseEvent | Event>) => {
+        if (tool === ToolType.Cursor || tool === ToolType.MoveCursor) return;
+        const current = Object.assign({}, template)
+        switch(tool) {
+            case ToolType.Text:
+                const mouse = ev.evt as MouseEvent
+                const newItem: ParagraphSchema = {
+                    id: crypto.randomUUID(),
+                    "@type": "P",
+                    value: "New text",
+                    alignment: "ALIGN_RIGHT",
+                    size: {
+                        width: DEFAULT_SIZING,
+                        height: DEFAULT_SIZING
+                    }, 
+                    position: {
+                        x: mouse.layerX, y: mouse.layerY
+                    }
+                }
+                current.content.body.pages[0].content.push(newItem)
+                break
+        }
+        setTemplate(current)
+    }
 
     useEffect(() => {
         setComponent(null)
@@ -49,6 +77,7 @@ export const DocumentPanel = ({
             <div style={{ marginBottom: "5rem", marginTop: "3rem" }}>
             <CenterContent>
                 <StageWithTheme
+                    onClick={onClick}
                     width={pageSize.w} 
                     height={pageSize.h}>
                     <Layer>
