@@ -1,5 +1,5 @@
 import { PinTopIcon } from "@radix-ui/react-icons"
-import { Box, Flex, TextField } from "@radix-ui/themes"
+import { Box, Flex, Grid, TextField } from "@radix-ui/themes"
 
 type VarsPanelProps = {
 
@@ -10,20 +10,20 @@ export const VarsPanel = ({
 }: VarsPanelProps) => {
     return (
         <>
-        <Flex>
-            <Box width="3">
+        <Grid columns="2" gap="1" width="max-content">
+            <Box width="9">
                 <TextField.Root mb="1" size="1">
                     <TextField.Slot><PinTopIcon/></TextField.Slot>
                     <TextField.Input/>
                 </TextField.Root>
             </Box>
-            <Box width="6">
+            <Box>
                 <TextField.Root mb="1" size="1">
                     <TextField.Slot><PinTopIcon/></TextField.Slot>
                     <TextField.Input/>
                 </TextField.Root>
             </Box>
-        </Flex>
+        </Grid>
         </>
     )
 }
