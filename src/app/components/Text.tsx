@@ -4,7 +4,6 @@ import { useAppContext } from "../states/AppContext"
 import Konva from "konva"
 import { useEffect, useRef, useState, ChangeEvent } from "react"
 import { ComponentInfo, ComponentLocation, ComponentSchema, DEFAULT_POSITION, DEFAULT_SIZE, ParagraphSchema, getOrDefault } from "../models/pdf-jsonschema"
-import { ToolType } from "../section/ToolsPanel"
 
 import { 
     Text,
@@ -14,6 +13,7 @@ import {
 } from '@radix-ui/themes';
 import { DialogHelper } from "./DialogHelper"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
+import { ToolType } from "../models/tool.model"
 
 type NxTextProps = {
     data: ParagraphSchema

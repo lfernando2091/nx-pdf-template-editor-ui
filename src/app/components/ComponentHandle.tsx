@@ -1,5 +1,5 @@
 import { ComponentInfo, ComponentLocation, ComponentSchema, ParagraphSchema } from "../models/pdf-jsonschema"
-import { ToolType } from "../section/ToolsPanel"
+import { ToolType } from "../models/tool.model"
 import { useAppContext } from "../states/AppContext"
 import { COLOR_2, COLOR_3, COLOR_4 } from "../utils/constants"
 import { NxText } from "./Text"

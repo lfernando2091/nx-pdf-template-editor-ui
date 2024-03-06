@@ -1,11 +1,12 @@
 import * as data from '../assets/example.json';
 import styled from '@emotion/styled'
-import { ToolType, ToolsPanel } from './section/ToolsPanel';
+import { ToolsPanel } from './section/ToolsPanel';
 import { EditorContent } from './section/EditorContent';
 import { DrawerContent } from './section/DrawerContent';
 import { useState } from 'react';
 import { AppContext, AppState } from './states/AppContext';
 import { ComponentInfo, PdfJsonSchema } from './models/pdf-jsonschema';
+import { ToolType } from './models/tool.model';
 
 const Layout = styled('div')`
   display: flex;

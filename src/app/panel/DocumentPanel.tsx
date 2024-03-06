@@ -9,12 +9,12 @@ import { ComponentLocation, DEFAULT_DOCUMENT,
 } from '../models/pdf-jsonschema';
 import { Circle, Layer, Stage } from 'react-konva';
 import styled from '@emotion/styled';
-import { ToolType } from '../section/ToolsPanel';
 import { useEffect, useState } from 'react';
 import { ComponentHandle } from '../components/ComponentHandle';
 import { MarginsRegion } from '../components/MarginsRegion';
 import Konva from 'konva';
 import { DEFAULT_SIZING } from '../utils/constants';
+import { ToolType } from '../models/tool.model';
 
 export type DocumentPanelProps = {
 

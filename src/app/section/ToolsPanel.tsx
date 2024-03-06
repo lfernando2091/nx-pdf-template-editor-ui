@@ -13,25 +13,16 @@ import {
     BorderSolidIcon
 } from '@radix-ui/react-icons'
 import { 
-    Separator,
-    IconButton
+    IconButton,
+    Tabs,
+    Box
 } from '@radix-ui/themes';
 import { ToolHelper } from '../components/ToolHelper';
 import { CenterContent } from '../components/Center';
 import { DialogHelper } from '../components/DialogHelper';
-
-export enum ToolType {
-  Cursor,
-  MoveCursor,
-  Text,
-  InputText,
-  Square,
-  Circle,
-  Line,
-  Table,
-  BarChar,
-  PieChar
-}
+import { PdfPanel } from '../panel/PdfPanel';
+import { VarsPanel } from '../panel/VarsPanel';
+import { ToolType } from '../models/tool.model';
 
 type ToolsPanelProps = {
   current: ToolType
@@ -158,11 +149,24 @@ export const ToolsPanel = ({
           </div>
           <div>
             <DialogHelper
-              title='Hola'
+              title='Document settings'
               trigger={
                 <IconButton variant="soft"><DotsVerticalIcon/></IconButton>
               }>
-                <h1>Hola</h1>
+                <Tabs.Root defaultValue="overall">
+                  <Tabs.List>
+                    <Tabs.Trigger value="overall">Overall</Tabs.Trigger>
+                    <Tabs.Trigger value="vars">Variables</Tabs.Trigger>
+                  </Tabs.List>
+                  <Box px="4" pt="3" pb="2">
+                    <Tabs.Content value="overall">
+                      <PdfPanel/>
+                    </Tabs.Content>
+                    <Tabs.Content value="vars">
+                      <VarsPanel/>
+                    </Tabs.Content>
+                  </Box>
+                </Tabs.Root>
             </DialogHelper>
           </div>
         </>

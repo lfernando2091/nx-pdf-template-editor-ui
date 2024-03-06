@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react"
-import { ToolType } from "../section/ToolsPanel"
 import { ComponentInfo, DEFAULT_PDF_SCHEMA, PdfJsonSchema } from "../models/pdf-jsonschema"
+import { ToolType } from "../models/tool.model"
 
 export type AppState = {
     tool: ToolType
