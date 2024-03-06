@@ -1,13 +1,13 @@
 import { createContext, useContext } from "react"
 import { ToolType } from "../section/ToolsPanel"
-import { ComponentSchema, DEFAULT_PDF_SCHEMA, PdfJsonSchema } from "../models/pdf-jsonschema"
+import { ComponentInfo, DEFAULT_PDF_SCHEMA, PdfJsonSchema } from "../models/pdf-jsonschema"
 
 export type AppState = {
     tool: ToolType
     template: PdfJsonSchema
     setTemplate: (template: PdfJsonSchema) => void
-    component: ComponentSchema | null
-    setComponent: (id: ComponentSchema | null) => void
+    component: ComponentInfo | null
+    setComponent: (id: ComponentInfo | null) => void
 }
 
 export const AppContext = createContext<AppState>({
@@ -15,7 +15,7 @@ export const AppContext = createContext<AppState>({
     template: DEFAULT_PDF_SCHEMA,
     setTemplate: (template: PdfJsonSchema) => { },
     component: null,
-    setComponent: (component: ComponentSchema | null) => { }
+    setComponent: (component: ComponentInfo | null) => { }
 })
 
 export const useAppContext = () => useContext(AppContext)

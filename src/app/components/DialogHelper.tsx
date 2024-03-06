@@ -6,32 +6,51 @@ import {
 import { ReactNode } from "react"
 
 export type DialogHelper = {
-    title: string
+    title?: string
+    description?: string
+    trigger: ReactNode
     children: ReactNode
+    footer?: ReactNode
+    onConfirm?: () => void
 }
 
 export const DialogHelper = ({
     title,
-    children
+    description,
+    trigger,
+    children,
+    footer,
+    onConfirm
 }: DialogHelper) => {
-
     return (<>
     <Dialog.Root>
         <Dialog.Trigger>
-        { children }
+        { trigger }
         </Dialog.Trigger>
         <Dialog.Content style={{ maxWidth: 450 }}>
-            <Dialog.Title>{ title }</Dialog.Title>
-
+            {title &&
+                <Dialog.Title>{ title }</Dialog.Title>
+            }
+            {description &&
+                <Dialog.Description>{ description }</Dialog.Description>
+            }
+            {children}
             <Flex gap="3" mt="4" justify="end">
-                <Dialog.Close>
-                    <Button variant="soft" color="gray">
-                        Cancel
-                    </Button>
-                </Dialog.Close>
-                <Dialog.Close>
-                    <Button>Save</Button>
-                </Dialog.Close>
+                {footer &&
+                    <>{footer}</>
+                }
+                {footer === undefined &&
+                    <>
+                    <Dialog.Close>
+                        <Button variant="soft" color="gray">
+                            Cancel
+                        </Button>
+                    </Dialog.Close>
+                    <Dialog.Close>
+                        <Button onClick={onConfirm}>Save</Button>
+                    </Dialog.Close>
+                    </>
+                }
             </Flex>
         </Dialog.Content>
     </Dialog.Root>

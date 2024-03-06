@@ -76,6 +76,11 @@ export type RectangleSchema = {
 
 export type ComponentSchema = ParagraphSchema | RectangleSchema
 
+export type ComponentInfo = {
+    data: ComponentSchema
+    location: ComponentLocation
+}
+
 export type PageSchema = {
     content: Array<ComponentSchema>
 }

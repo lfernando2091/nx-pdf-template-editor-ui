@@ -158,8 +158,11 @@ export const ToolsPanel = ({
           </div>
           <div>
             <DialogHelper
-              title='Hola'>
-              <IconButton variant="soft"><DotsVerticalIcon/></IconButton>
+              title='Hola'
+              trigger={
+                <IconButton variant="soft"><DotsVerticalIcon/></IconButton>
+              }>
+                <h1>Hola</h1>
             </DialogHelper>
           </div>
         </>

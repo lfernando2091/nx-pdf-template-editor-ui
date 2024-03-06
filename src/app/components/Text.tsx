@@ -2,16 +2,26 @@ import { Group, Rect, Text as KonvaText, Transformer } from "react-konva"
 import { COLOR_1 } from "../utils/constants"
 import { useAppContext } from "../states/AppContext"
 import Konva from "konva"
-import { useEffect, useRef, useState } from "react"
-import { ComponentSchema, DEFAULT_POSITION, DEFAULT_SIZE, ParagraphSchema, getOrDefault } from "../models/pdf-jsonschema"
+import { useEffect, useRef, useState, ChangeEvent } from "react"
+import { ComponentInfo, ComponentLocation, ComponentSchema, DEFAULT_POSITION, DEFAULT_SIZE, ParagraphSchema, getOrDefault } from "../models/pdf-jsonschema"
 import { ToolType } from "../section/ToolsPanel"
+
+import { 
+    Text,
+    TextField,
+    IconButton,
+    TextArea
+} from '@radix-ui/themes';
+import { DialogHelper } from "./DialogHelper"
+import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 
 type NxTextProps = {
     data: ParagraphSchema
     draggable: boolean
     select?: boolean
-    onUpdate: (update: ComponentSchema) => void
-    color: string
+    onUpdate: (update: ComponentInfo) => void
+    color: string,
+    location: ComponentLocation
 }
 // crypto.randomUUID()
 export const NxText = ({
@@ -19,14 +29,15 @@ export const NxText = ({
     draggable,
     select,
     onUpdate,
-    color
+    color,
+    location
 }: NxTextProps) => {
     const shapeRef = useRef<Konva.Group>(null)
     const transformRef = useRef<Konva.Transformer>(null)
     const [transform, setTransform] = useState(false)
     const { setComponent, tool } = useAppContext()
-    const [size, setSize] = useState(getOrDefault(DEFAULT_SIZE, data.size))
-    const [position, setPosition] = useState(getOrDefault(DEFAULT_POSITION, data.position))
+    const size = getOrDefault(DEFAULT_SIZE, data.size)
+    const position = getOrDefault(DEFAULT_POSITION, data.position)
 
     const onTransformShape = () => {
         // we need to attach transformer manually
@@ -38,7 +49,10 @@ export const NxText = ({
 
     const onClick = (ev: Konva.KonvaEventObject<MouseEvent | Event>) => {
         if (tool === ToolType.MoveCursor) {
-            setComponent(data)
+            setComponent({
+                data,
+                location
+            })
             ev.cancelBubble = true
         }
     }
@@ -61,11 +75,6 @@ export const NxText = ({
         }
     }, [transform, select]);
 
-    useEffect(() => {
-        setSize(getOrDefault(DEFAULT_SIZE, data.size))
-        setPosition(getOrDefault(DEFAULT_POSITION, data.position))
-    }, [data]);
-
     return (<>
         <Group
             ref={shapeRef}
@@ -81,11 +90,14 @@ export const NxText = ({
             draggable={draggable}
             onDragEnd={(e) => {
                 onUpdate({
-                    ...data,
-                    position: {
-                        x: e.target.x(),
-                        y: e.target.y(),
-                    }
+                    data: {
+                        ...data,
+                        position: {
+                            x: parseFloat(e.target.x().toFixed(2)),
+                            y: parseFloat(e.target.y().toFixed(2)),
+                        }
+                    }, 
+                    location
                 })
             }}
             onTransformEnd={(e) => {
@@ -101,16 +113,19 @@ export const NxText = ({
                     node.scaleX(1);
                     node.scaleY(1);
                     onUpdate({
-                        ...data,
-                        position: {
-                            x: node.x(),
-                            y: node.y(),
+                        data: {
+                            ...data,
+                            position: {
+                                x: parseFloat(node.x().toFixed(2)),
+                                y: parseFloat(node.y().toFixed(2)),
+                            },
+                            size: {
+                                // set minimal value
+                                width: parseFloat(Math.max(5, node.width() * scaleX).toFixed(2)),
+                                height: parseFloat(Math.max(node.height() * scaleY).toFixed(2)),
+                            }
                         },
-                        size: {
-                            // set minimal value
-                            width: Math.max(5, node.width() * scaleX),
-                            height: Math.max(node.height() * scaleY),
-                        }
+                        location
                     });
                 }
             }}>
@@ -144,5 +159,51 @@ export const NxText = ({
 
             </Transformer>
         }
+    </>)
+}
+
+type NxTextPropertyPanel = {
+    data: ParagraphSchema,
+    onUpdate: (component: ComponentSchema) => void
+}
+
+export const NxTextPropertyPanel = ({
+    data,
+    onUpdate
+}: NxTextPropertyPanel) => {
+    const [value, setValue] = useState<string>(data.value)
+
+    const onUpdateValue = (ev: ChangeEvent<HTMLTextAreaElement>) => {
+        const current = ev.target.value
+        setValue(current)
+    }
+    const onConfirm = () => {
+        onUpdate({
+            ...data,
+            value
+        })
+    }
+    return (<>
+        <Text size="1" mb="2" weight="bold">Text</Text>
+        <TextField.Root mb="1" size="1">
+            <TextField.Input readOnly value={data.value} />
+            <TextField.Slot>
+                <DialogHelper
+                title='Update data'
+                trigger={
+                    <IconButton size="1" variant="ghost">
+                        <DotsHorizontalIcon />
+                    </IconButton>
+                }
+                onConfirm={onConfirm}>
+                    <Text size="1" mb="2" weight="bold">Value</Text>
+                    <TextArea 
+                        variant="soft" 
+                        onChange={onUpdateValue}
+                        rows={5} 
+                        value={value}/>
+                </DialogHelper>
+            </TextField.Slot>
+        </TextField.Root>
     </>)
 }
