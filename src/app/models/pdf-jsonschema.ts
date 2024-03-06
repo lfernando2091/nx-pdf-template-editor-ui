@@ -26,7 +26,7 @@ export type DocumentSchema = {
     title?: string
     author?: string
     creator?: string
-    tkey_wordsitle?: string
+    key_words?: string
     language?: string
     subject?: string
     page_size?: PageType
