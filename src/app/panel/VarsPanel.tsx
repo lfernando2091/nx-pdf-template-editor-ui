@@ -1,5 +1,6 @@
 import { Box, Grid, TextArea, TextField, Text, Button } from "@radix-ui/themes"
 import { useAppContext } from "../states/AppContext"
+import { useState, ChangeEvent } from "react"
 
 type VarsPanelProps = {
 
@@ -9,7 +10,18 @@ export const VarsPanel = ({
 
 }: VarsPanelProps) => {
     const { template } = useAppContext()
-    const variables = template.variables ?? {}
+    const [variables, setVariables] = useState(template.variables ?? {})
+
+    const onUpdateVariableName = (ev: ChangeEvent<HTMLInputElement>) => {
+        const current = ev.target.value
+        const newVars = template.variables
+        //TODO Review to overwrite variables names 
+    }
+
+    const onUpdateVariableContent = (ev: ChangeEvent<HTMLTextAreaElement>) => {
+        const current = ev.target.value
+    }
+
     return (
         <>
         <Grid columns="2" gap="1" width="max-content">
@@ -21,7 +33,8 @@ export const VarsPanel = ({
                     size="1">
                         <TextField.Input 
                         value={e}
-                        placeholder="Variable name"/>
+                        placeholder="Variable name"
+                        onChange={onUpdateVariableName}/>
                     </TextField.Root>
                 </Box>
                 <Box>
@@ -30,7 +43,8 @@ export const VarsPanel = ({
                         variant="soft"
                         value={variables[e].value}
                         placeholder="Variable content"
-                        rows={3} />
+                        rows={3} 
+                        onChange={onUpdateVariableContent}/>
                 </Box>
             </>))}
         </Grid>

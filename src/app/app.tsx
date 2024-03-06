@@ -1,5 +1,4 @@
-import * as data from '../assets/example.json';
-import styled from '@emotion/styled'
+// import * as data from '../assets/example.json';
 import { ToolsPanel } from './section/ToolsPanel';
 import { EditorContent } from './section/EditorContent';
 import { DrawerContent } from './section/DrawerContent';
@@ -7,48 +6,12 @@ import { useState } from 'react';
 import { AppContext, AppState } from './states/AppContext';
 import { ComponentInfo, PdfJsonSchema } from './models/pdf-jsonschema';
 import { ToolType } from './models/tool.model';
-
-const Layout = styled('div')`
-  display: flex;
-  justify-content: start;
-  flex-direction: row;
-  width: 100%;
-`
-
-const LeftNavbar = styled('div')`
-  width: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
-  overflow-y: auto;
-`
-
-const RightNavbar = styled('div')`
-  width: 300px;
-  height: 100vh;
-  overflow-y: auto;
-  box-sizing: border-box;
-`
-
-const Content = styled('div')`
-  width: 100%;
-  height: 100vh;
-  overflow-y: auto;
-  flex-grow: 1;
-  box-sizing: border-box;
-`
-
-const Panel = styled('div')`
-  display: flex;
-  justify-content: start;
-  flex-direction: row-reverse;
-  width: 100%;
-`
+import { Content, Layout, LeftNavbar, Panel, RightNavbar } from './layout/DashboardLayout';
+import { DEFAULT_PDF_JSON } from './utils/constants';
 
 export function App() {
   const [currentTool, setCurrentTool] = useState<ToolType>(ToolType.Cursor)
-  const [currentTemplate, setCurrentTemplate] = useState<PdfJsonSchema>((data as unknown) as PdfJsonSchema)
+  const [currentTemplate, setCurrentTemplate] = useState<PdfJsonSchema>(DEFAULT_PDF_JSON)
   const [component, setCurrentComponent] = useState<ComponentInfo | null>(null)
 
   const onChangeTool = (select: ToolType) => {
