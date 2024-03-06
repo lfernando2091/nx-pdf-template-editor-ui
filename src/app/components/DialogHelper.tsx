@@ -12,6 +12,7 @@ export type DialogHelper = {
     children: ReactNode
     footer?: ReactNode
     onConfirm?: () => void
+    onOpenChange?: (open: boolean) => void
 }
 
 export const DialogHelper = ({
@@ -20,10 +21,11 @@ export const DialogHelper = ({
     trigger,
     children,
     footer,
-    onConfirm
+    onConfirm,
+    onOpenChange
 }: DialogHelper) => {
     return (<>
-    <Dialog.Root>
+    <Dialog.Root onOpenChange={onOpenChange}>
         <Dialog.Trigger>
         { trigger }
         </Dialog.Trigger>

@@ -172,6 +172,7 @@ export const NxTextPropertyPanel = ({
     onUpdate
 }: NxTextPropertyPanel) => {
     const [value, setValue] = useState<string>(data.value)
+    const [valueStatic, setValueStatic] = useState<string>(data.value)
 
     const onUpdateValue = (ev: ChangeEvent<HTMLTextAreaElement>) => {
         const current = ev.target.value
@@ -182,11 +183,12 @@ export const NxTextPropertyPanel = ({
             ...data,
             value
         })
+        setValueStatic(value)
     }
     return (<>
         <Text size="1" mb="2" weight="bold">Text</Text>
         <TextField.Root mb="1" size="1">
-            <TextField.Input readOnly value={data.value} />
+            <TextField.Input readOnly value={valueStatic} />
             <TextField.Slot>
                 <DialogHelper
                 title='Update data'
