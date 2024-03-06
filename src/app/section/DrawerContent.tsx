@@ -3,7 +3,7 @@ import {
     Tabs, 
 } from '@radix-ui/themes';
 import { PropertiesPanel } from '../panel/PropertiesPanel';
-import { LayersPanel } from '../panel/LayersPanel';
+// import { LayersPanel } from '../panel/LayersPanel';
 
 export const DrawerContent = () => {
     return (
@@ -11,7 +11,7 @@ export const DrawerContent = () => {
         <Tabs.Root defaultValue="props">
           <Tabs.List>
             <Tabs.Trigger value="props">Properties</Tabs.Trigger>
-            <Tabs.Trigger value="layers">Layers</Tabs.Trigger>
+            {/* <Tabs.Trigger value="layers">Layers</Tabs.Trigger> */}
           </Tabs.List>
 
           <Box px="4" pt="3" pb="2">
@@ -19,7 +19,7 @@ export const DrawerContent = () => {
               <PropertiesPanel/>
             </Tabs.Content>
             <Tabs.Content value="layers">
-              <LayersPanel/>
+              {/* <LayersPanel/> */}
             </Tabs.Content>
           </Box>
         </Tabs.Root>

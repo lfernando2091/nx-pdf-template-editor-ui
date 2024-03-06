@@ -23,6 +23,7 @@ import { DialogHelper } from '../components/DialogHelper';
 import { PdfPanel } from '../panel/PdfPanel';
 import { VarsPanel } from '../panel/VarsPanel';
 import { ToolType } from '../models/tool.model';
+import { AboutPanel } from '../panel/AboutPanel';
 
 type ToolsPanelProps = {
   current: ToolType
@@ -157,6 +158,7 @@ export const ToolsPanel = ({
                   <Tabs.List>
                     <Tabs.Trigger value="overall">Overall</Tabs.Trigger>
                     <Tabs.Trigger value="vars">Variables</Tabs.Trigger>
+                    <Tabs.Trigger value="about">About</Tabs.Trigger>
                   </Tabs.List>
                   <Box px="4" pt="3" pb="2">
                     <Tabs.Content value="overall">
@@ -164,6 +166,9 @@ export const ToolsPanel = ({
                     </Tabs.Content>
                     <Tabs.Content value="vars">
                       <VarsPanel/>
+                    </Tabs.Content>
+                    <Tabs.Content value="about">
+                      <AboutPanel/>
                     </Tabs.Content>
                   </Box>
                 </Tabs.Root>
