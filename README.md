@@ -12,7 +12,7 @@ It works with JSON Templates; you define your PDF content using JSON structure a
 
 ## What's dynamic content generation?
 
-In the Kotlin/Java module with your template, you can pass variables or an external JSON data source for rendering your PDF.
+In the Kotlin/Java module with your template, you can pass variables or an external JSON data source for rendering your PDF content.
 
 For instance:
 
