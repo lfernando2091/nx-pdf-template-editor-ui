@@ -23,7 +23,7 @@ export default defineConfig({
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
-  base: './',
+  base: '/nx-pdf-template-editor-ui/',
 
   build: {
     outDir: './dist/nx-pdf-json-editor-ui',
