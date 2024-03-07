@@ -4,7 +4,7 @@ import {
 
 export const AboutPanel = () => {
     return  (<>
-    <Text size="5" weight="bold">NX PDF Template</Text>
+    <Text size="5" weight="bold">NX PDF Templates</Text>
     <div>
     <Text size="1" weight="light">
         Thanks for taking your time for playing around this concept.

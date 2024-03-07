@@ -46,7 +46,7 @@ export const DocumentPanel = ({
                     id: crypto.randomUUID(),
                     "@type": "P",
                     value: "New text",
-                    alignment: "ALIGN_RIGHT",
+                    alignment: "ALIGN_LEFT",
                     size: {
                         width: DEFAULT_SIZING,
                         height: DEFAULT_SIZING
