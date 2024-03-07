@@ -23,10 +23,10 @@ export default defineConfig({
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
+  base: '/nx-pdf-json-editor-ui/',
 
   build: {
     outDir: './dist/nx-pdf-json-editor-ui',
-    assetsDir: 'nx-pdf-template-editor-ui/assets',
     reportCompressedSize: true,
     commonjsOptions: {
       transformMixedEsModules: true,
