@@ -1,20 +1,21 @@
 ### NX PDF JSON Templates (UI Editor)
 
-This is the UI Editor for editing your JSON Templates
+This is the UI Editor for editing your JSON Templates.
 
 ## What's this?
 
-This a concept project for dynamic PDF generation using JSON templates.
+This is a concept project for dynamic PDF generation using JSON templates.
 
 ## How it works?
 
-It works with JSON Templates, you define your PDF content using json strcuture and then render the content with the Kotlin/ Java module.
+It works with JSON Templates; you define your PDF content using JSON structure and then render the content with the Kotlin/Java module.
 
 ## What's dynamic content generation?
 
-On Kotlin/ Java module with your template you can pass variables or external JSON data source for rendering your PDF.
+In the Kotlin/Java module with your template, you can pass variables or an external JSON data source for rendering your PDF.
 
 For instance:
+
 Variable:
 - `var1 = Hello world`
 
@@ -57,21 +58,21 @@ A JSON template has a generic structure
 }
 ```
 
-- `variables`: You can define your global variables here with default variables, you can easily overwrite them at runtime.
+- `variables`: You can define your global variables here with default values; you can easily overwrite them at runtime.
 
-- `document`: You can add some document settings or metadata like author, title and document margins.
+- `document`: You can add some document settings or metadata like author, title, and document margins.
 
-- `content`: Here you can add your PDF content like paragraphs, text, images and so on.
+- `content`: Here you can add your PDF content like paragraphs, text, images, and so on.
 
 ## UI Editor
 
-You can use the UI Editor for easily modify your JSON Template. You can edit or generate new templates.
+You can use the UI Editor for easily modifying your JSON Template. You can edit or generate new templates.
 
 ![Image 3](./docs/assets/img3.png "Editor")
 
 ## Render Template with module
 
-Once you defined your template you can use the Kotlin/ Java module for rendering your PDF, you can pass new values for your variables and add an external data source. 
+Once you've defined your template, you can use the Kotlin/Java module for rendering your PDF. You can pass new values for your variables and add an external data source.
 
 ![Image 2](./docs/assets/img2.png "Render")
 
