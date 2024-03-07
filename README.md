@@ -2,6 +2,8 @@
 
 This is the UI Editor for editing your JSON Templates.
 
+[Use Kotlin Module](https://github.com/lfernando2091/nx-pdf-template)
+
 ## What's this?
 
 This is a concept project for dynamic PDF generation using JSON templates.
