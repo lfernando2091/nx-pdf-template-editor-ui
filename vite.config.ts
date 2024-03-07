@@ -26,6 +26,7 @@ export default defineConfig({
 
   build: {
     outDir: './dist/nx-pdf-json-editor-ui',
+    assetsDir: 'nx-pdf-template-editor-ui',
     reportCompressedSize: true,
     commonjsOptions: {
       transformMixedEsModules: true,
